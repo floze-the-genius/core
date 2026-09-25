@@ -104,7 +104,7 @@
   I.set = (lang) => {
     I.lang = DICT[lang] ? lang : 'en';
     document.documentElement.lang = I.lang;
-    document.title = I.t('title');
+    document.title = I.t('title') + ' Deluxe';
     I.apply(document);
   };
   I.t = (key) => (DICT[I.lang] && DICT[I.lang][key]) || DICT.en[key] || key;
