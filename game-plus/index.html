@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#07030f" />
+    <meta name="description" content="ВА-БАНК Deluxe / ALL IN Deluxe — 3D casino clicker" />
+    <title>ВА-БАНК Deluxe</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='.4' cy='.35'%3E%3Cstop offset='0' stop-color='%23fff6c2'/%3E%3Cstop offset='.55' stop-color='%23ffc93a'/%3E%3Cstop offset='1' stop-color='%23b8730c'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%239a5a06' stroke-width='4'/%3E%3Cpath d='M32 17l4.4 9 9.9 1.4-7.2 7 1.7 9.8L32 39.6l-8.8 4.6 1.7-9.8-7.2-7 9.9-1.4z' fill='%239a5a06'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Unbounded:wght@600;800;900&display=swap"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <canvas id="bg"></canvas>
+    <canvas id="gl"></canvas>
+    <div id="loader"><div class="ld-coin"></div></div>
+
+    <div id="shake">
+      <div id="app">
+        <!-- ============ TITLE ============ -->
+        <section id="scr-title" class="screen">
+          <div class="title-stack">
+            <div class="logo">
+              <div class="logo-glow" data-i18n="title">ВА-БАНК</div>
+              <h1 class="logo-text split" data-i18n="title">ВА-БАНК</h1>
+              <div class="logo-badge">Deluxe</div>
+              <div class="logo-under">
+                <span class="suit s1">♠</span><span class="suit s2">♥</span><span class="suit s3">♦</span
+                ><span class="suit s4">♣</span>
+              </div>
+            </div>
+            <canvas id="title-coin" width="320" height="320"></canvas>
+            <div class="menu">
+              <button class="btn btn-gold btn-xl" id="btn-play">
+                <span class="btn-ic" data-icon="play"></span><span data-i18n="play">Играть</span>
+              </button>
+              <button class="btn btn-glass" id="btn-settings">
+                <span class="btn-ic" data-icon="gear"></span><span data-i18n="settings">Настройки</span>
+              </button>
+            </div>
+          </div>
+          <div class="lang-quick" id="lang-quick"></div>
+        </section>
+
+        <!-- ============ GAME ============ -->
+        <section id="scr-game" class="screen">
+          <header class="hud">
+            <div class="hud-row">
+              <div class="floor-badge" id="floor-badge"></div>
+              <div class="money" id="money">
+                <div class="coins"><span class="coin-ic" data-icon="coin"></span><span id="coins">0</span></div>
+                <div class="income"><span data-icon="clock"></span><span id="income">+0</span></div>
+              </div>
+              <div class="hud-right">
+                <div class="boosts" id="boosts"></div>
+                <button class="icon-btn" id="btn-gear" data-i18n-title="settings"><span data-icon="gear"></span></button>
+              </div>
+            </div>
+            <button class="elevator" id="elevator">
+              <span class="el-fill" id="el-fill"></span>
+              <span class="el-shine"></span>
+              <span class="el-icon" id="el-icon"></span>
+              <span class="el-track" id="el-track"></span>
+              <span class="el-price" id="el-price"></span>
+            </button>
+          </header>
+
+          <main class="main">
+            <div class="stage" id="stage">
+              <div class="views" id="views"></div>
+              <nav class="tabs" id="tabs"></nav>
+            </div>
+            <aside class="shop" id="shop">
+              <div class="shop-grab" id="shop-grab"></div>
+              <div class="shop-list" id="shop-list"></div>
+            </aside>
+          </main>
+        </section>
+
+        <!-- ============ ENDING ============ -->
+        <section id="scr-end" class="screen">
+          <div class="end-stack">
+            <div class="end-crown" data-icon="crown"></div>
+            <h2 class="end-title" data-i18n="victory">ПОБЕДА</h2>
+            <div class="end-stats" id="end-stats"></div>
+            <div class="menu row">
+              <button class="btn btn-gold" id="btn-again">
+                <span class="btn-ic" data-icon="again"></span><span data-i18n="again">Заново</span>
+              </button>
+              <button class="btn btn-glass icon-only" id="btn-home" aria-label="home"><span class="btn-ic" data-icon="home"></span></button>
+            </div>
+          </div>
+        </section>
+
+        <div id="golden-layer"></div>
+        <div id="hints"></div>
+      </div>
+      <div id="banners"></div>
+    </div>
+
+    <div id="cinema"></div>
+    <canvas id="fx"></canvas>
+    <div id="modal-root"></div>
+    <div id="flash"></div>
+    <div id="tip"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/15.1.22/Tone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.20.0/matter.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@1.48.0/dist/umd/lucide.min.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/icons.js"></script>
+    <script src="js/econ.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/audio-tone.js"></script>
+    <script src="js/fx.js"></script>
+    <script src="js/three/stage3d.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/coin.js"></script>
+    <script src="js/bet.js"></script>
+    <script src="js/games/flip.js"></script>
+    <script src="js/games/slots.js"></script>
+    <script src="js/games/plinko.js"></script>
+    <script src="js/games/plinko-lite.js"></script>
+    <script src="js/games/wheel.js"></script>
+    <script src="js/games/crash.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/cinema.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

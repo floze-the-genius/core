@@ -9,7 +9,7 @@ const gitignorePath = path.resolve(path.dirname(fileURLToPath(import.meta.url)),
 export default [
   includeIgnoreFile(gitignorePath),
   // standalone browser game, plain ES2020 scripts outside the library build
-  {ignores: ['game/**']},
+  {ignores: ['game/**', 'game-plus/**']},
   ...oclif,
   prettier,
   {
